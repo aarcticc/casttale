@@ -1,4 +1,4 @@
-# my_first_raycaster
+# casttale
 
 A small and lightweight raycaster made in C. This project implements a classic Wolfenstein 3D-style raycasting engine, providing a pseudo-3D first-person perspective from a 2D map.
 
@@ -71,8 +71,8 @@ sudo apt-get update
 sudo apt-get install gcc make libsdl2-dev
 
 # Clone the repository
-git clone https://github.com/aarcticc/my_first_raycaster.git
-cd my_first_raycaster
+git clone https://github.com/aarcticc/casttale.git
+cd casttale
 
 # Build the project
 make
@@ -88,8 +88,8 @@ make
 sudo dnf install gcc make SDL2-devel
 
 # Clone the repository
-git clone https://github.com/aarcticc/my_first_raycaster.git
-cd my_first_raycaster
+git clone https://github.com/aarcticc/casttale.git
+cd casttale
 
 # Build the project (see .txt)
 make
@@ -108,8 +108,8 @@ make
 brew install gcc make sdl2
 
 # Clone the repository
-git clone https://github.com/aarcticc/my_first_raycaster.git
-cd my_first_raycaster
+git clone https://github.com/aarcticc/casttale.git
+cd casttale
 
 # Build the project
 make
@@ -125,8 +125,8 @@ make
 # Download SDL2 development libraries from https://www.libsdl.org/download-2.0.php
 
 # Clone the repository
-git clone https://github.com/aarcticc/my_first_raycaster.git
-cd my_first_raycaster
+git clone https://github.com/aarcticc/casttale.git
+cd casttale
 
 # Build the project
 make
@@ -196,7 +196,7 @@ The raycaster uses basic trigonometry:
 Files or folders not mentioned here, are not relevant  to understand.
 
 ```
-my_first_raycaster/
+casttale/
 ├── assets/                 # Textures
 ├── src/
 │   ├── main.c                # Entry point, main game loop and player logic
