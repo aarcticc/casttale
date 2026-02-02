@@ -17,7 +17,7 @@ void get_log_filename(char *buffer, size_t size)
         struct tm *t = localtime(&now);
         
         /**
-         * Format and write filename to buffer using snprintf for safety
+         * Format and write filename to buffer using snprintf for safety       
          * %02d ensures numbers are padded with zeros to 2 digits
          * tm_mon is 0-based, so add 1 for human-readable month
          * tm_year is years since 1900, so add 1900 for current year
