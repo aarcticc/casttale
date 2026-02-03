@@ -1,4 +1,4 @@
-/* Standart C Library */
+/* Standard C Library */
 #include <stdio.h>
 #include <string.h>
 #include <time.h>

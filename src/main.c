@@ -1,3 +1,4 @@
+/* Begin of File main.c */
 /* Stadnart C Library */
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@
 #include "start_wrapper.h"
 #include "map.h"
 
-int main(void) 
+int main() 
 {
         /* Initialize log file name */
         get_log_filename(log_file, sizeof(log_file));
@@ -31,7 +32,8 @@ int main(void)
         /* Initialize graphics system */
         Graphics gfx = {0}; /* 0 to initialize the structure */
         if (init_graphics(&gfx) != 0) {
-                log_message(LOG_MODULE_GRAPHICS, "Graphics initialization failed");
+                log_message(LOG_MODULE_GRAPHICS,
+                            "Graphics initialization failed");
                 SDL_Quit();
                 return 1;
         }
@@ -70,7 +72,7 @@ int main(void)
         
                 char spawn_msg[128];
                 snprintf(spawn_msg, sizeof(spawn_msg), 
-                        "[Player] Unsafe spawn detected, teleported to (%.2f, %.2f)", 
+                        "[Player] Invalid spawn, teleported to (%.2f, %.2f)",  
                         player.x, player.y);
                 log_error(log_file, spawn_msg);
         }
@@ -89,17 +91,20 @@ int main(void)
         }
 
         if (!validate_texture(&floor_texture)) {
-                log_error(log_file, "[Texture] Floor texture validation failed");
+                log_error(log_file,
+                          "[Texture] Floor texture validation failed");
                 valid_textures = 0;
         }
 
         if (!validate_texture(&ceiling_texture)) {
-                log_error(log_file, "[Texture] Ceiling texture validation failed");
+                log_error(log_file, 
+                          "[Texture] Ceiling texture validation failed");
                 valid_textures = 0;
         }
 
         if (valid_textures) {
-                log_error(log_file, "[System] All textures validated successfully");
+                log_error(log_file, 
+                          "[System] All textures validated successfully");
         } else {
                 log_error(log_file, "[System] Texture validation failed");
                 shutdown_graphics(&gfx);
@@ -118,7 +123,6 @@ int main(void)
                 while (SDL_PollEvent(&event)) {
                         if (event.type != SDL_QUIT)
                                 continue;
-        
                         log_error(log_file, "[Game] Received quit signal");
                         running = 0;
                 }
@@ -139,3 +143,4 @@ int main(void)
         log_separator(log_file, "CLEAN EXIT");
         return 0;
 }
+/* End of File main.c */
