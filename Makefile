@@ -35,7 +35,7 @@ REQUIRED_DIRS = $(BIN_DIR) $(MAPS_DIR) $(ASSETS_DIR)
 # Source and object files
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(BIN_DIR)/%.o,$(SRC))
-BIN = raycaster
+BIN = casttale
 
 # Required asset files
 REQUIRED_ASSETS = wall1.png wall2.png wall3.png wall4.png floor.png ceiling.png

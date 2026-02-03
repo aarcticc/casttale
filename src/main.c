@@ -1,5 +1,5 @@
 /* Begin of File main.c */
-/* Stadnart C Library */
+/* Standard C Library */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

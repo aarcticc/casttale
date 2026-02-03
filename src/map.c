@@ -1,92 +1,96 @@
-//! Standart C Library
+// Standard C Library
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
 #include <json.h>
 
-//! Project Headers
+// Project Headers
 #include "log_utils.h"
 #include "map.h"
 
-static struct json_value_s *find_in_object(struct json_object_s *obj, const char *key) {
-    for (struct json_object_element_s *el = obj->start; el; el = el->next) {
-        if (el->name && el->name->string && strcmp(el->name->string, key) == 0) {
-            return el->value;
+static struct json_value_s *find_in_object(struct json_object_s *obj, const char *key) 
+{
+        for (struct json_object_element_s *el = obj->start; el; el = el->next) {
+                if (el->name && el->name->string && strcmp(el->name->string, key) == 0) {
+                        return el->value;
+                }
         }
-    }
-    return NULL;
+        return NULL;
 }
 
-/* Map representation:
-   0 = Empty space (corridor)
-   1-0 = Different wall textures
+/**
+ * Map representation:
+ * 0 = Empty space (corridor)
+ * 1-0 = Different wall textures
 */
 
-// maybe change, to map is only in map.json files 
+/* maybe change, to map is only in map.json files */ 
 int map[MAP_HEIGHT][MAP_WIDTH] = {
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,4,0,3,0,3,3,2,2,1,1,1,1,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,4,0,1,0,1,1,4,0,4,4,3,3,0,1},
-    {1,0,0,0,0,0,1,0,4,0,0,0,3,0,0,1},
-    {1,0,2,2,1,1,4,4,2,0,2,2,4,0,0,1},
-    {1,0,0,0,1,0,0,0,2,0,2,0,0,0,0,1},
-    {1,0,1,1,1,1,1,0,2,0,3,3,4,4,0,1},
-    {1,0,0,0,0,0,0,0,2,0,3,0,4,0,0,1},
-    {1,0,4,4,2,0,4,4,4,4,1,1,3,0,0,1},
-    {1,0,4,0,0,0,4,0,0,0,1,0,3,0,0,1},
-    {1,0,1,1,3,0,2,2,1,0,2,0,3,0,0,1},
-    {1,0,1,0,0,0,2,0,1,0,2,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1},
+        {1,0,0,0,2,0,0,0,0,0,2,0,0,0,0,1},
+        {1,0,0,0,3,0,0,0,0,0,3,0,0,0,0,1},
+        {1,0,0,0,4,0,0,0,0,0,4,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int is_valid_position(float x, float y) {
-    int mapX = (int)x;
-    int mapY = (int)y;
-    
-    if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT) {
-        return 0;
-    }
-    
-    return map[mapY][mapX] == 0;
+int is_valid_position(float x, float y) 
+{
+        int mapX = (int)x;
+        int mapY = (int)y;
+
+        if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT) {
+                return 0;
+        }
+
+        return map[mapY][mapX] == 0;
 }
 
-void find_nearest_empty_space(float* x, float* y) {
-    int currentX = (int)*x;
-    int currentY = (int)*y;
-    float minDistance = INFINITY;
-    float bestX = *x;
-    float bestY = *y;
+void find_nearest_empty_space(float* x, float* y) 
+{
+        int currentX = (int)*x;
+        int currentY = (int)*y;
+        float minDistance = INFINITY;
+        float bestX = *x;
+        float bestY = *y;
 
-    // Search in increasing spiral pattern
-    for(int radius = 1; radius < MAP_WIDTH && radius < MAP_HEIGHT; radius++) {
-        for(int dx = -radius; dx <= radius; dx++) {
-            for(int dy = -radius; dy <= radius; dy++) {
-                int testX = currentX + dx;
-                int testY = currentY + dy;
-                
-                if (testX >= 0 && testX < MAP_WIDTH && 
-                    testY >= 0 && testY < MAP_HEIGHT && 
-                    map[testY][testX] == 0) {
-                    
-                    float distance = sqrtf((float)(dx * dx + dy * dy));
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        bestX = testX + 0.5f; // Center of the cell
-                        bestY = testY + 0.5f;
-                    }
+        /* Search in increasing spiral pattern */
+        for(int radius = 1; radius < MAP_WIDTH && radius < MAP_HEIGHT; radius++) {
+                for(int dx = -radius; dx <= radius; dx++) {
+                        for(int dy = -radius; dy <= radius; dy++) {
+                                int testX = currentX + dx;
+                                int testY = currentY + dy;
+
+                                if (testX >= 0 && testX < MAP_WIDTH && 
+                                    testY >= 0 && testY < MAP_HEIGHT && 
+                                    map[testY][testX] == 0) {
+
+                                        float distance = sqrtf((float)(dx * dx + dy * dy));
+                                        if (distance < minDistance) {
+                                                minDistance = distance;
+                                                bestX = testX + 0.5f; /* Center of the cell */
+                                                bestY = testY + 0.5f;
+                                        }
+                                }
+                        }
                 }
-            }
+                /* when found a valid position, stop searching */
+                if (minDistance != INFINITY) break;
         }
-        // If we found a valid position, stop searching
-        if (minDistance != INFINITY) break;
-    }
 
-    *x = bestX;
-    *y = bestY;
+        *x = bestX;
+        *y = bestY;
 }
 
 int load_custom_map(const char* filename) {
