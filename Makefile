@@ -28,7 +28,7 @@ LDFLAGS = $(BASE_LDFLAGS)
 # Directory structure
 SRC_DIR = src
 BIN_DIR = bin
-MAPS_DIR = maps
+# MAPS_DIR = maps
 ASSETS_DIR = assets
 REQUIRED_DIRS = $(BIN_DIR) $(MAPS_DIR) $(ASSETS_DIR)
 
@@ -47,31 +47,31 @@ REQUIRED_ASSETS = wall1.png wall2.png wall3.png wall4.png floor.png ceiling.png
 all: check-deps dirs check-assets $(BIN)
 
 # Map loading and verification
-load-map:
-	@echo "Checking for maps directory..."
-	@mkdir -p $(MAPS_DIR)
-	@if [ -f "$(MAPS_DIR)/custom_map.json" ]; then \
-		echo "✓ Found custom map, ready to load"; \
-	else \
-		echo "⚠ No custom map found in $(MAPS_DIR)/"; \
-		echo "  Please save a map from the mapmaker first"; \
-	fi
+#load-map:
+#	@echo "Checking for maps directory..."
+#	@mkdir -p $(MAPS_DIR)
+#	@if [ -f "$(MAPS_DIR)/custom_map.json" ]; then \
+#		echo "✓ Found custom map, ready to load"; \
+#	else \
+#		echo "⚠ No custom map found in $(MAPS_DIR)/"; \
+#		echo "  Please save a map from the mapmaker first"; \
+#	fi
 
 # Run target with optional map loading
-run: $(BIN)
-	@if [ -n "$(MAP)" ]; then \
-		if [ -f "$(MAP)" ]; then \
-			echo "→ Loading custom map: $(MAP)"; \
-			cp "$(MAP)" "$(MAPS_DIR)/custom_map.json"; \
-			./$(BIN); \
-		else \
-			echo "✗ Error: Map file $(MAP) not found"; \
-			exit 1; \
-		fi \
-	else \
-		echo "→ Running with default map"; \
-		./$(BIN); \
-	fi
+#run: $(BIN)
+#	@if [ -n "$(MAP)" ]; then \
+#		if [ -f "$(MAP)" ]; then \
+#			echo "→ Loading custom map: $(MAP)"; \
+#			cp "$(MAP)" "$(MAPS_DIR)/custom_map.json"; \
+#			./$(BIN); \
+#		else \
+#			echo "✗ Error: Map file $(MAP) not found"; \
+#			exit 1; \
+#		fi \
+#	else \
+#		echo "→ Running with default map"; \
+#		./$(BIN); \
+#	fi
 
 # Enhanced dependency checking
 check-deps:
@@ -116,11 +116,11 @@ check-assets:
 	@echo "✓ All assets verified"
 
 # Backup utility
-backup:
-	@echo "→ Creating backup..."
-	@tar -czf raycaster_backup_$$(date +%Y%m%d_%H%M%S).tar.gz \
-		$(SRC_DIR) $(ASSETS_DIR) $(MAPS_DIR) Makefile
-	@echo "✓ Backup created"
+#backup:
+#	@echo "→ Creating backup..."
+#	@tar -czf raycaster_backup_$$(date +%Y%m%d_%H%M%S).tar.gz \
+#		$(SRC_DIR) $(ASSETS_DIR) $(MAPS_DIR) Makefile
+#	@echo "✓ Backup created"
 
 # Cleanup targets
 clean:
@@ -134,7 +134,7 @@ clean:
 
 deep-clean: clean
 	@echo "Performing deep clean..."
-	@rm -rf $(MAPS_DIR)/*.json
+#	@rm -rf $(MAPS_DIR)/*.json
 	@echo "✓ Deep clean complete (maps and build files removed)"
 
 help:
