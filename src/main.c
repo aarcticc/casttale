@@ -12,7 +12,6 @@
 #include "raycaster.h"
 #include "texture.h"
 #include "log_utils.h"
-#include "start_wrapper.h"
 #include "map.h"
 
 int main() 

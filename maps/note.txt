@@ -1,1 +1,0 @@
-the Makefile code for custom maps is commented-out (Makefile:line 62)
