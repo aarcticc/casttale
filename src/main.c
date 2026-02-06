@@ -1,5 +1,5 @@
-/* Begin of File main.c */
-/* Standard C Library */
+/* begin of file main.c */
+/* glibc headers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
-/* Project Headers */
+/* own headers */
 #include "raycaster.h"
 #include "texture.h"
 #include "log_utils.h"
@@ -17,11 +17,11 @@
 
 int main() 
 {
-        /* Initialize log file name */
+        /* initialize log file name */
         get_log_filename(log_file, sizeof(log_file));
         log_separator(LOG_SECTION_INIT, "STARTUP");
 
-        /* Initialize SDL subsystems */
+        /* initialize SDL subsystems */
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0) {
                 log_message(LOG_MODULE_SDL, "SDL initialization failed");
                 fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
@@ -29,7 +29,7 @@ int main()
         }
         log_message(LOG_MODULE_SDL, "SDL initialized successfully");
 
-        /* Initialize graphics system */
+        /* initialize graphics system */
         Graphics gfx = {0}; /* 0 to initialize the structure */
         if (init_graphics(&gfx) != 0) {
                 log_message(LOG_MODULE_GRAPHICS,
@@ -39,7 +39,7 @@ int main()
         }
         log_message(LOG_MODULE_GRAPHICS, "Graphics successfully initialized");
 
-        /* Load wall textures from files */
+        /* load wall textures from files */
         if (init_textures(gfx.renderer) != 0) {
                 fprintf(stderr, "Texture init failed.\n");
                 log_error(log_file, "[Textures] Initialization failed");
@@ -48,10 +48,10 @@ int main()
         }
         log_error(log_file, "[Textures] Successfully loaded all textures");
 
-        /* Log successful startup */
+        /* log successful startup */
         log_error(log_file, "[System] All systems initialized successfully");
 
-        /* Initialize player position and direction with safety check */
+        /* initialize player position and direction with safety check */
         Player player = {
                 .x = 1.5f,
                 .y = 1.5f,
@@ -59,10 +59,10 @@ int main()
                 .dirY = 0.0f,
                 .planeX = 0.0f,
                 .planeY = 0.66f,
-                .perpWallDist = {0}  /* Initialize all elements to 0 */
+                .perpWallDist = {0}  /* initialize all elements to 0 */
         };
 
-        /* Check if spawn position is valid, if not find nearest safe spot */
+        /* check if spawn position is valid, if not find nearest suitable spot */ 
         if (!is_valid_position(player.x, player.y)) {
                 float newX = player.x;
                 float newY = player.y;
@@ -77,7 +77,7 @@ int main()
                 log_error(log_file, spawn_msg);
         }
 
-        /* Add texture validation logging */
+        /* add texture validation logging */
         log_error(log_file, "[System] Starting texture validation");
         int valid_textures = 1;
         for(int i = 0; i < NUM_WALL_TEXTURES; i++) {
@@ -111,14 +111,15 @@ int main()
                 return 1;
         }
 
-        /* Setup event handling and keyboard state */
+        /* setup event handling and keyboard state */
         SDL_Event event;
         const Uint8 *keystate = SDL_GetKeyboardState(NULL);
         int running = 1;
 
         log_error(log_file, "[Game] Starting main loop");
         log_separator(log_file, "STARTING MAIN LOOP");
-        /* Main game loop */
+        
+        /* main game loop */
         while (running) {
                 while (SDL_PollEvent(&event)) {
                         if (event.type != SDL_QUIT)
@@ -132,7 +133,7 @@ int main()
                 SDL_Delay(16);
         }
 
-        /* Cleanup everything in reverse order of initialization */
+        /* cleanup everything in reverse order of initialization */
         log_error(log_file, "[System] Starting cleanup");
         log_separator(log_file, "SHUTDOWN SEQUENCE");
         destroy_textures();
@@ -143,4 +144,4 @@ int main()
         log_separator(log_file, "CLEAN EXIT");
         return 0;
 }
-/* End of File main.c */
+/* end of file main.c */

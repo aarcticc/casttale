@@ -1,25 +1,26 @@
-/* Standard C Library */
+/* begin of file log_utils.c */
+/* glibc headers */
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
-/* Project Headers */
+/* own headers */
 #include "log_utils.h"
 
-/* Global definition of log_file */
+/* log_file global definition */
 char log_file[64];
 
 void get_log_filename(char *buffer, size_t size) 
 {
-        /* Get current time as Unix timestamp */
+        /* get current time as Unix timestamp */
         time_t now = time(NULL);
-        /* Convert timestamp to local time structure */
+        /* convert timestamp to local time structure */
         struct tm *t = localtime(&now);
         
-        /**
-         * Format and write filename to buffer using snprintf for safety       
-         * %02d ensures numbers are padded with zeros to 2 digits
-         * tm_mon is 0-based, so add 1 for human-readable month
+        /** 
+         * format and write filename to buffer for safety,
+         * %02d ensures numbers are padded with zeros to 2 digits,
+         * tm_mon is 0-based, so add 1 for human-readable month,
          * tm_year is years since 1900, so add 1900 for current year
          */
         snprintf(buffer, size, "log_%02d-%02d-%04d_%02d-%02d.txt",
@@ -31,58 +32,59 @@ void get_log_filename(char *buffer, size_t size)
 void log_message(const char *module, const char *message) 
 {
         /** 
-         * Open file in append mode ("a")
-         * This creates the file if it doesn't exist
+         * open file in append mode ("a"),
+         * creates the file if it doesn't exist
          */
         FILE *fp = fopen(log_file, "a");
-        if (!fp) return;  /* Return silently if file can't be opened */
+        if (!fp) return;  /* return silently if file can't be opened */
 
-        /* Get current time for the log entry */
+        /* get current time for the log entry */
         time_t now = time(NULL);
         struct tm *t = localtime(&now);
 
         /**
-         * Write timestamped message to file
-         * Format: [HH:MM:SS] module_name message
+         * write timestamped message to file,
+         * format: [HH:MM:SS] module_name message
          */
         fprintf(fp, "[%02d:%02d:%02d] %s %s\n",
                 t->tm_hour, t->tm_min, t->tm_sec, 
                 module ? module : "", message);
 
-        /* Close file to save changes and free resources */
+        /* close file to save changes and free resources */
         fclose(fp);
 }
 
-/* Function to log a separator line with section and subsection */
+/* function to log a separator line with section and subsection */
 void log_separator(const char* section, const char* subsection) 
 {
         /**
-         * Open file in append mode ("a")
-         * This creates the file if it doesn't exist
+         * open file in append mode ("a"),
+         * this creates the file if it doesn't exist
          */
         FILE *fp = fopen(log_file, "a");
         if (!fp) return;  /* Return silently if file can't be opened */
 
-        /* Write separator lines and section/subsection information */
+        /* write separator lines and section/subsection information */
         fprintf(fp, "\n%s\n", "===========================================");
-        
+
         if (section && subsection) {
-                /* If both section and subsection are provided, print them */
+                /* if both section and subsection are provided, print them */
                 fprintf(fp, "    %s - %s\n", section, subsection);
         } else if (section) {
-                /* If only section is provided, print it */
+                /* if only section is provided, print it */
                 fprintf(fp, "            %s\n", section);
         }
         
         fprintf(fp, "%s\n\n", "===========================================");
 
-        /* Close file to save changes and free resources */
+        /* close file to save changes and free resources */
         fclose(fp);
 }
 
-/* Function to log an error message (backward compatibility) */
+/* function to log an error message (backward compatibility) */
 void log_error(const char *filename __attribute__((unused)), const char *message) 
 {
-        /* Call log_message with NULL module for backward compatibility */
+        /* call log_message with NULL module */
         log_message(NULL, message);
 }
+/* end of file log_utils.c */

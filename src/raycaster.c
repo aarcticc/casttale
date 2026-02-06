@@ -1,108 +1,113 @@
-//! Standard C Library
+/* begin of file raycaster.c */
+/* glibc headers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-//! Project Headers
+/* own headers */
 #include "raycaster.h"
 #include "texture.h"
 #include "map.h"
 #include "log_utils.h"
 
-// Initialize graphics system - creates window, renderer, and texture buffer
-int init_graphics(Graphics *gfx) {
-    if (!gfx) {
-        log_error(log_file, "[Graphics] Invalid graphics pointer");
-        return -1;
-    }
+/* initialize graphics system: creates window, renderer, and texture buffer */
+int init_graphics(Graphics *gfx) 
+{
+        if (!gfx) {
+            log_error(log_file, "[Graphics] Invalid graphics pointer");
+            return -1;
+        }
 
-    // Initialize SDL with all required subsystems
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0) {
-        log_error(log_file, "[SDL] Initialization failed");
-        fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
-        return -1;
-    }
+        /* initialize SDL with all required subsystems */
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0) {
+                log_error(log_file, "[SDL] Initialization failed");
+                fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
+                return -1;
+        }
 
-    // Set render quality and disable compositor bypass
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-    SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
-    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+        /* let render quality and disable compositor bypass */
+        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+        SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+        SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
-    // Create window with proper flags
-    gfx->window = SDL_CreateWindow(
-        "Raycaster",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        SCREEN_WIDTH, SCREEN_HEIGHT,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
-    );
+        /* create window with proper flags */
+        gfx->window = SDL_CreateWindow(
+                "Casttale", /* window name */
+                SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                SCREEN_WIDTH, SCREEN_HEIGHT,
+                SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
+        );
 
-    if (!gfx->window) {
-        log_error(log_file, "[SDL] Window creation failed");
-        fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return -1;
-    }
+        if (!gfx->window) {
+                log_error(log_file, "[SDL] Window creation failed");
+                fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
+                SDL_Quit();
+                return -1;
+        }
 
-    // Create renderer with vsync and accelerated flag
-    gfx->renderer = SDL_CreateRenderer(gfx->window, -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        /* create renderer with vsync and accelerated flag */
+        gfx->renderer = SDL_CreateRenderer(gfx->window, -1,
+                SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+        );
 
-    if (!gfx->renderer) {
-        log_error(log_file, "[SDL] Renderer creation failed");
-        fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
-        SDL_DestroyWindow(gfx->window);
-        SDL_Quit();
-        return -1;
-    }
+        if (!gfx->renderer) {
+                log_error(log_file, "[SDL] Renderer creation failed");
+                fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
+                SDL_DestroyWindow(gfx->window);
+                SDL_Quit();
+                return -1;
+        }
 
-    // Make sure OpenGL/Direct3D coordinate system is set up correctly
-    SDL_RenderSetLogicalSize(gfx->renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-    SDL_SetRenderDrawBlendMode(gfx->renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(gfx->renderer, 0, 0, 0, 255);
+        /* make sure OpenGL/Direct3D coordinate system is set up correctly */
+        SDL_RenderSetLogicalSize(gfx->renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+        SDL_SetRenderDrawBlendMode(gfx->renderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(gfx->renderer, 0, 0, 0, 255);
 
-    // Create main rendering texture
-    gfx->texture = SDL_CreateTexture(gfx->renderer,
-        SDL_PIXELFORMAT_ARGB8888,
-        SDL_TEXTUREACCESS_STREAMING,
-        SCREEN_WIDTH, SCREEN_HEIGHT);
+        /* create main rendering texture */
+        gfx->texture = SDL_CreateTexture(gfx->renderer,
+                SDL_PIXELFORMAT_ARGB8888,
+                SDL_TEXTUREACCESS_STREAMING,
+                SCREEN_WIDTH, SCREEN_HEIGHT
+        );
 
-    if (!gfx->texture) {
-        log_error(log_file, "[SDL] Texture creation failed");
-        fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
-        SDL_DestroyRenderer(gfx->renderer);
-        SDL_DestroyWindow(gfx->window);
-        SDL_Quit();
-        return -1;
-    }
+        if (!gfx->texture) {
+                log_error(log_file, "[SDL] Texture creation failed");
+                fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
+                SDL_DestroyRenderer(gfx->renderer);
+                SDL_DestroyWindow(gfx->window);
+                SDL_Quit();
+                return -1;
+        }
 
-    // Allocate pixel buffer
-    gfx->pixels = calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(Uint32));
-    if (!gfx->pixels) {
-        log_error(log_file, "[Memory] Failed to allocate pixel buffer");
-        SDL_DestroyTexture(gfx->texture);
-        SDL_DestroyRenderer(gfx->renderer);
-        SDL_DestroyWindow(gfx->window);
-        SDL_Quit();
-        return -1;
-    }
+        /* allocate pixel buffer */
+        gfx->pixels = calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(Uint32));
+        if (!gfx->pixels) {
+                log_error(log_file, "[Memory] Failed to allocate pixel buffer");
+                SDL_DestroyTexture(gfx->texture);
+                SDL_DestroyRenderer(gfx->renderer);
+                SDL_DestroyWindow(gfx->window);
+                SDL_Quit();
+                return -1;
+        }
 
-    // Clear initial screen
-    SDL_RenderClear(gfx->renderer);
-    SDL_RenderPresent(gfx->renderer);
+        /* clear initial screen */
+        SDL_RenderClear(gfx->renderer);
+        SDL_RenderPresent(gfx->renderer);
     
-    log_error(log_file, "[Graphics] Initialization successful");
-    return 0;
+        log_error(log_file, "[Graphics] Initialization successful");
+        return 0;
 }
 
-// Clean up and free all graphics resources
-void shutdown_graphics(Graphics *gfx) {
-    if (!gfx) return;
-    if (gfx->pixels) { free(gfx->pixels); gfx->pixels = NULL; }
-    if (gfx->texture) { SDL_DestroyTexture(gfx->texture); gfx->texture = NULL; }
-    if (gfx->renderer) { SDL_DestroyRenderer(gfx->renderer); gfx->renderer = NULL; }
-    if (gfx->window) { SDL_DestroyWindow(gfx->window); gfx->window = NULL; }
-    SDL_Quit();
+/* clean up and free all graphics resources */
+void shutdown_graphics(Graphics *gfx) 
+{
+        if (!gfx) return;
+        if (gfx->pixels) { free(gfx->pixels); gfx->pixels = NULL; }
+        if (gfx->texture) { SDL_DestroyTexture(gfx->texture); gfx->texture = NULL; }
+        if (gfx->renderer) { SDL_DestroyRenderer(gfx->renderer); gfx->renderer = NULL; }
+        if (gfx->window) { SDL_DestroyWindow(gfx->window); gfx->window = NULL; }
+        SDL_Quit();
 }
 
 // Main rendering function - renders one frame

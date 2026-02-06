@@ -1,15 +1,16 @@
-/* Standard C Library */
+/* begin of file map.c */
+/* glibc headers */
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
 
-/* Project Headers */
+/* own headers */
 #include "log_utils.h"
 #include "map.h"
 
 /**
- * Map representation:
+ * map representation:
  * 0 = Empty space (corridor)
  * 1-0 = Different wall textures
  */
@@ -53,7 +54,7 @@ void find_nearest_empty_space(float* x, float* y)
         float bestX = *x;
         float bestY = *y;
 
-        /* Search in increasing spiral pattern */
+        /* search in increasing spiral pattern */
         for(int radius = 1; radius < MAP_WIDTH && radius < MAP_HEIGHT; radius++) {
                 for(int dx = -radius; dx <= radius; dx++) {
                         for(int dy = -radius; dy <= radius; dy++) {
@@ -67,16 +68,17 @@ void find_nearest_empty_space(float* x, float* y)
                                         float distance = sqrtf((float)(dx * dx + dy * dy));
                                         if (distance < minDistance) {
                                                 minDistance = distance;
-                                                bestX = testX + 0.5f; /* Center of the cell */
+                                                bestX = testX + 0.5f; /* center of the cell */
                                                 bestY = testY + 0.5f;
                                         }
                                 }
                         }
                 }
-                /* when found a valid position, stop searching */
+                /* when a valid position is found, stop searching */
                 if (minDistance != INFINITY) break;
         }
 
         *x = bestX;
         *y = bestY;
 }
+/* end of file map.c */
