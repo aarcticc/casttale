@@ -35,6 +35,7 @@ To build and run this raycaster, you'll need the following dependencies:
 ### GNU/Linux Debian and derivates
 
 ```bash
+# Install dependencies
 sudo apt-get update
 sudo apt-get install gcc make libsdl2-dev
 
