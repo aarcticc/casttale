@@ -21,7 +21,7 @@ To build and run this raycaster, you'll need the following dependencies:
 
 - **C Compiler** (GCC recommended or Clang)
   - GCC 4.8 or later
-  - Clang 3.4 or later # Not tested
+  - Clang 3.4 or later (Not tested)
   
 - **Make** - Build automation tool
   - GNU Make 3.81 or later
