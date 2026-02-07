@@ -48,17 +48,17 @@
 #define ROT_SPEED 0.06f
 
 typedef struct {
-    float x, y;
-    float dirX, dirY;
-    float planeX, planeY;
-    float perpWallDist[SCREEN_WIDTH];
+        float x, y;
+        float dirX, dirY;
+        float planeX, planeY;
+        float perpWallDist[SCREEN_WIDTH];
 } Player;
 
 typedef struct {
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    SDL_Texture *texture;
-    Uint32 *pixels;
+        SDL_Window *window;
+        SDL_Renderer *renderer;
+        SDL_Texture *texture;
+        Uint32 *pixels;
 } Graphics;
 
 int init_graphics(Graphics *gfx);
