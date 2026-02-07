@@ -30,11 +30,14 @@ extern TextureInfo ceiling_texture;
  * function to load and initialize all wall textures,
  * takes an SDL_Renderer pointer as parameter to create textures,
  * returns 0 on success, non-zero on failure,
- * int init_textures(SDL_Renderer* renderer);,
+ */ 
+int init_textures(SDL_Renderer* renderer);
+
+/**
  * function to properly free all allocated texture memory,
  * should be called before program termination
  */
- void destroy_textures(void);
+void destroy_textures(void);
 
 /* add texture validation function */
 int validate_texture(const TextureInfo* tex);
