@@ -1,13 +1,13 @@
-################################################################################
-# Raycaster Project Makefile
-# Version: 1.2
-# Author: aarticc
-# Last Updated: 1770417068
-#
-# Description:
-#   Build system for the game engine with SDL2 graphics.
-#   Supports debug/release builds, (backups) and asset verification.
-################################################################################
+######################################################################
+# Raycaster Project Makefile					     #
+# Version: 1.2.L						     #
+# Author: aarticc						     #
+# Last Updated: 1770587270					     #
+#							             #
+# Description:							     #
+#   Build system for the game engine with SDL2 graphics.	     #
+#   Supports debug/release builds, (backups) and asset verification. #
+######################################################################
 
 # Build configuration
 BUILD_TYPE ?= release
