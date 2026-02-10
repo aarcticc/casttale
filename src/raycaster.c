@@ -282,37 +282,37 @@ void handle_input(Player *player, const Uint8 *keystate, int map[MAP_HEIGHT][MAP
 
         /* move forward */
         if (keystate[SDL_SCANCODE_UP]) {
-                newX = player -> x + player -> dirX * MOVE_SPEED;
-                newY = player -> y + player -> dirY * MOVE_SPEED;
-                if (map[(int)newY][(int)player -> x] == 0) player -> y = newY;
-                if (map[(int)player -> y][(int)newX] == 0) player -> x = newX;
+                newX = player->x + player->dirX * MOVE_SPEED;
+                newY = player->y + player->dirY * MOVE_SPEED;
+                if (map[(int)newY][(int)player->x] == 0) player->y = newY;
+                if (map[(int)player->y][(int)newX] == 0) player->x = newX;
         }
 
         /* move backward */
         if (keystate[SDL_SCANCODE_DOWN]) {
-                newX = player -> x - player -> dirX * MOVE_SPEED;
-                newY = player -> y - player -> dirY * MOVE_SPEED;
-                if (map[(int)newY][(int)player -> x] == 0) player -> y = newY;
-                if (map[(int)player -> y][(int)newX] == 0) player -> x = newX;
+                newX = player->x - player->dirX * MOVE_SPEED;
+                newY = player->y - player->dirY * MOVE_SPEED;
+                if (map[(int)newY][(int)player->x] == 0) player->y = newY;
+                if (map[(int)player->y][(int)newX] == 0) player->x = newX;
         }
 
         /* pan left */
         if (keystate[SDL_SCANCODE_LEFT]) {
-                float oldDirX = player -> dirX;
-                player -> dirX = player -> dirX * cos(ROT_SPEED) - player -> dirY * sin(ROT_SPEED);
-                player -> dirY = oldDirX * sin(ROT_SPEED) + player->dirY * cos(ROT_SPEED);
-                float oldPlaneX = player -> planeX;
-                player -> planeX = player -> planeX * cos(ROT_SPEED) - player -> planeY * sin(ROT_SPEED);
-                player -> planeY = oldPlaneX * sin(ROT_SPEED) + player -> planeY * cos(ROT_SPEED);
+                float oldDirX = player->dirX;
+                player->dirX = player->dirX * cos(ROT_SPEED) - player->dirY * sin(ROT_SPEED);
+                player->dirY = oldDirX * sin(ROT_SPEED) + player->dirY * cos(ROT_SPEED);
+                float oldPlaneX = player->planeX;
+                player->planeX = player->planeX * cos(ROT_SPEED) - player->planeY * sin(ROT_SPEED);
+                player->planeY = oldPlaneX * sin(ROT_SPEED) + player->planeY * cos(ROT_SPEED);
         }
 
         /* pan right */
         if (keystate[SDL_SCANCODE_RIGHT]) {
-                float oldDirX = player -> dirX;
-                player -> dirX = player -> dirX * cos(-ROT_SPEED) - player -> dirY * sin(-ROT_SPEED);
-                player -> dirY = oldDirX * sin(-ROT_SPEED) + player -> dirY * cos(-ROT_SPEED);
+                float oldDirX = player->dirX;
+                player->dirX = player->dirX * cos(-ROT_SPEED) - player->dirY * sin(-ROT_SPEED);
+                player->dirY = oldDirX * sin(-ROT_SPEED) + player->dirY * cos(-ROT_SPEED);
                 float oldPlaneX = player -> planeX;
-                player -> planeX = player -> planeX * cos(-ROT_SPEED) - player -> planeY * sin(-ROT_SPEED);
-                player -> planeY = oldPlaneX * sin(-ROT_SPEED) + player -> planeY * cos(-ROT_SPEED);
+                player->planeX = player->planeX * cos(-ROT_SPEED) - player->planeY * sin(-ROT_SPEED);
+                player->planeY = oldPlaneX * sin(-ROT_SPEED) + player->planeY * cos(-ROT_SPEED);
         }
 }
