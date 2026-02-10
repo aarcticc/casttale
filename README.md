@@ -1,4 +1,4 @@
-# casttale
+# Casttale
 
 ## Disclaimer
 
