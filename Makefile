@@ -119,7 +119,7 @@ help:
 	@echo "  make release  - Build optimized version"
 	@echo "  make clean    - Remove build files"
 	@echo "  make run     - Run the program"
-	@echo "  make backup   - Create backup of source files"
+	@echo "  make backup   - Create backup of source files" (NOT IN USE)
 	@echo "  make check   - Verify build environment"
 
 debug:
