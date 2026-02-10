@@ -67,7 +67,7 @@ make
 ./casttale
 ```
 
-### macOS
+### macOS (not tested, but should work)
 
 ```bash
 # Install Homebrew if not already installed
@@ -87,7 +87,7 @@ make
 ./casttale
 ```
 
-### Windows (MinGW)
+### Windows (MinGW) (SOON)
 
 ```bash
 # Install MinGW and SDL2 (or use MSYS2)
