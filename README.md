@@ -28,7 +28,7 @@ To build and run this raycaster, you'll need the following dependencies:
 
 ## Installation
 
-### GNU/Linux Debian and derivates
+### GNU/Linux (Debian/derivates)
 
 ```bash
 # Install dependencies
@@ -46,7 +46,7 @@ make
 ./casttale
 ```
 
-### Linux (Fedora/RHEL)
+### GNU/Linux (Fedora/RHEL)
 
 ```bash
 # Install dependencies
