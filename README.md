@@ -36,7 +36,7 @@ sudo apt-get update
 sudo apt-get install gcc make libsdl2-dev
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
@@ -53,7 +53,7 @@ make
 sudo dnf install gcc make SDL2-devel
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project (see .txt)
@@ -73,7 +73,7 @@ make
 brew install gcc make sdl2
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
@@ -90,7 +90,7 @@ make
 # Download SDL2 development libraries from https://www.libsdl.org/download-2.0.php
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
