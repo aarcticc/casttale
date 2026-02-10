@@ -28,7 +28,7 @@ To build and run this raycaster, you'll need the following dependencies:
 
 ## Installation
 
-### GNU/Linux Debian and derivates
+### GNU/Linux (Debian/derivates)
 
 ```bash
 # Install dependencies
@@ -36,7 +36,7 @@ sudo apt-get update
 sudo apt-get install gcc make libsdl2-dev
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
@@ -46,14 +46,14 @@ make
 ./casttale
 ```
 
-### Linux (Fedora/RHEL)
+### GNU/Linux (Fedora/RHEL)
 
 ```bash
 # Install dependencies
 sudo dnf install gcc make SDL2-devel
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project (see .txt)
@@ -73,7 +73,7 @@ make
 brew install gcc make sdl2
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
@@ -90,7 +90,7 @@ make
 # Download SDL2 development libraries from https://www.libsdl.org/download-2.0.php
 
 # Clone the repository
-git clone https://github.com/aarcticc/casttale.git
+git clone https://github.com/aarcticc/Casttale.git
 cd casttale
 
 # Build the project
@@ -141,7 +141,7 @@ Ideas for learning and expansion:
 ## Acknowledgments
 
 - Inspired by Wolfenstein 3D and the classic raycasting technique
-- Thanks to @jdah kicking of this idea with his Wolfenstein/DOOM remake series on YT
+- Thanks to @jdah(GitHub), @jdh(YouTube) for inpiring me with his Wolfenstein/DOOM remake series on YT
 
 ## Troubleshooting
 
