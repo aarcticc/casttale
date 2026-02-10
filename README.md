@@ -141,7 +141,7 @@ Ideas for learning and expansion:
 ## Acknowledgments
 
 - Inspired by Wolfenstein 3D and the classic raycasting technique
-- Thanks to @jdah kicking of this idea with his Wolfenstein/DOOM remake series on YT
+- Thanks to @jdah(GitHub), @jdh(YouTube) for inpiring me with his Wolfenstein/DOOM remake series on YT
 
 ## Troubleshooting
 
