@@ -311,7 +311,7 @@ void handle_input(Player *player, const Uint8 *keystate, int map[MAP_HEIGHT][MAP
                 float oldDirX = player->dirX;
                 player->dirX = player->dirX * cos(-ROT_SPEED) - player->dirY * sin(-ROT_SPEED);
                 player->dirY = oldDirX * sin(-ROT_SPEED) + player->dirY * cos(-ROT_SPEED);
-                float oldPlaneX = player -> planeX;
+                float oldPlaneX = player->planeX;
                 player->planeX = player->planeX * cos(-ROT_SPEED) - player->planeY * sin(-ROT_SPEED);
                 player->planeY = oldPlaneX * sin(-ROT_SPEED) + player->planeY * cos(-ROT_SPEED);
         }
