@@ -35,7 +35,7 @@ int init_graphics(Graphics *gfx)
         gfx->window = SDL_CreateWindow(
                 "Casttale", /* window name */
                 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                SCREEN_WIDTH, SCREEN_HEIGHT,
+                SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE |
                 SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
         );
 
