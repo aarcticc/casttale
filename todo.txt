@@ -1,0 +1,9 @@
+=> convert raycaster to BSP (Binary Space Partitioning)
+
+=> add new textures
+
+=> windows cross compilation
+        > add flags to Makefile: 
+                - make windows    ; cross compile with mingw
+                - make linux
+                - make all        ; compile both
