@@ -1,5 +1,7 @@
 => convert raycaster to BSP (Binary Space Partitioning)
 
+=> move loggin logic to 'debug.c', only to be created in 'debug' build
+
 => add new textures
 
 => windows cross compilation
